@@ -5,11 +5,19 @@
 import React from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxCross1 } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 import Footer from "../components/Footer";
+import AuthSlice from "../Redux/Slices/AuthSlice";
 
 function HomeLayout({ children }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
+  //   for dis displaying options menu
+  const role = useSelector((state) => state?.auth?.role);
+
   const changeWidth = () => {
     const drawerSide = document.getElementsByClassName("drawer-side")[0];
     drawerSide.style.width = "auto";
@@ -20,6 +28,11 @@ function HomeLayout({ children }) {
     // const drawerSide = document.getElementsByClassName("drawer-side")[0];
     // drawerSide.style.width = "0";
     // changeWidth();
+  };
+  const handleLogout = async (event) => {
+    event.preventDefault();
+    // const res = await dispatch(logout())
+    navigate("/");
   };
 
   return (
@@ -46,6 +59,11 @@ function HomeLayout({ children }) {
             <li>
               <Link to={"/home"}>Home</Link>
             </li>
+            {isLoggedIn && role === "admin" && (
+              <li>
+                <Link to={"/admin/dashboard"}>Admin Dashboard</Link>
+              </li>
+            )}
             <li>
               <Link to={"/courses"}>All Courses</Link>
             </li>
@@ -55,6 +73,26 @@ function HomeLayout({ children }) {
             <li>
               <Link to={"/about"}>About Us</Link>
             </li>
+            {!isLoggedIn && (
+              <div className=" gap-3 flex items-center justify-center mt-3 ">
+                <button className="border border-blue-600 hover:bg-blue-600 transition-all ease-in-out duration-300 hover:scale-90 px-4 py-1 font-semibold rounded-md w-full">
+                  <Link to={"/login"}>Login</Link>
+                </button>
+                <button className=" border border-blue-600 hover:bg-blue-600 transition-all ease-in-out duration-300 hover:scale-90 px-4 py-1 font-semibold rounded-md w-full">
+                  <Link to={"/login"}>signup</Link>
+                </button>
+              </div>
+            )}
+            {isLoggedIn && (
+              <div className=" gap-3 flex items-center justify-center mt-3 ">
+                <button className="border border-blue-600 hover:bg-blue-600 transition-all ease-in-out duration-300 hover:scale-90 px-4 py-1 font-semibold rounded-md w-full">
+                  <Link to={"/user/profile"}>Profile</Link>
+                </button>
+                <button className=" border border-blue-600 hover:bg-blue-600 transition-all ease-in-out duration-300 hover:scale-90 px-4 py-1 font-semibold rounded-md w-full">
+                  <Link onClick={handleLogout}>Logout</Link>
+                </button>
+              </div>
+            )}
           </ul>
         </div>
       </div>
