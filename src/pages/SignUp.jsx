@@ -112,7 +112,7 @@ function SignUp() {
         <form
           noValidate
           onSubmit={createNewAccount}
-          className="flex flex-col justify-center gap-3 rounded-lg p-4 text-white w-96 shadow-lg"
+          className="flex flex-col justify-center gap-3 rounded-lg p-4 bg-slate-800 text-white w-96 shadow-2xl"
         >
           <h1 className="text-center text-2xl font-bold ">Registration Page</h1>
           <label htmlFor="image_uploads" className="cursor-pointer">
