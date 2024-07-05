@@ -50,7 +50,7 @@ function HomeLayout({ children }) {
         </div>
         <div className="drawer-side w-0">
           <label htmlFor="my-drawer" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-48 sm:w-80 text-base bg-base-300 relative ">
+          <ul className="menu h-[100%] p-4 w-48 sm:w-80 text-base bg-base-300 relative ">
             <li className="w-fit absolute right-2 z-50">
               <button onClick={hideDrawer}>
                 <RxCross1 size={24} />
