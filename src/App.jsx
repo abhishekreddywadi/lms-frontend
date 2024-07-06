@@ -8,6 +8,7 @@ import HomePage from "../src/pages/HomePage";
 import Footer from "./components/Footer";
 import HomeLayout from "./Layouts/HomeLayout";
 import AboutUs from "./pages/AboutUs";
+import CourseList from "./pages/courses/CourseList";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import SignUp from "./pages/SignUp";
@@ -21,6 +22,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/about" element={<AboutUs />}></Route>
+        <Route path="/course" element={<CourseList />}></Route>
+
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="*" element={<NotFound />}></Route>

@@ -12,7 +12,7 @@ function Footer() {
 
   return (
     <>
-      <footer className="relative left-0 bottom-0 gap-5 min-w-fit sm:h-[10vh] flex flex-col sm:flex-row items-center justify-between text-white bg-gray-800  py-8 sm: px-20">
+      <footer className="  relative left-0 bottom-0 gap-5 min-w-fit sm:h-[10vh] flex flex-col sm:flex-row items-center justify-between text-white bg-gray-800  py-8 sm: px-20">
         <section className="sm:text-[1rem] text-wrap text-[0.8rem] ">
           Copyright {year} | All rights reserved
         </section>
