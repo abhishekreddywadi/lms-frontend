@@ -28,7 +28,7 @@ function CourseList() {
             Explore the Courses made by
             <span className="font-bold text-yellow-500 ">Industry Experts</span>
           </h1>
-          <div className="mb-10 flex flex-wrap gap-10  items-center  justify-center w-[80vw]  ">
+          <div className="mb-10 flex flex-wrap gap-10  items-center  justify-start w-[80vw]  ">
             {courseData?.map((course) => {
               // eslint-disable-next-line react/jsx-key
               return <CourseCard data={course} />;
