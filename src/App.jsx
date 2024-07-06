@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import HomeLayout from "./Layouts/HomeLayout";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
+import CourseDescription from "./pages/CourseDescription";
 import CourseList from "./pages/courses/CourseList";
 import Denied from "./pages/Denied";
 import Login from "./pages/Login";
@@ -27,6 +28,10 @@ function App() {
         <Route path="/course" element={<CourseList />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/denied" element={<Denied />}></Route>
+        <Route
+          path="/course/description"
+          element={<CourseDescription />}
+        ></Route>
 
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>

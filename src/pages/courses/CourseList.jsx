@@ -31,7 +31,7 @@ function CourseList() {
           <div className="mb-10 flex flex-wrap gap-10  items-center  justify-start w-[80vw]  ">
             {courseData?.map((course) => {
               // eslint-disable-next-line react/jsx-key
-              return <CourseCard data={course} />;
+              return <CourseCard key={course._id} data={course} />;
             })}
           </div>
         </div>

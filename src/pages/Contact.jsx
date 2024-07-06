@@ -2,7 +2,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-import axiosInstance from "../Helpers/axiosInstance";
+// import axiosInstance from "../Helpers/axiosInstance";
 import { isEmail } from "../Helpers/RegexHelper";
 import HomeLayout from "../Layouts/HomeLayout";
 
