@@ -43,7 +43,7 @@ function Profile() {
               Forgot Password
             </Link>
             <Link
-              to={"/editprofile"}
+              to={"/user/editprofile"}
               className="w-1/2 bg-gray-600 hover:bg-gray-500 rounded-sm py-1 px-2 transition-all ease-in-out duration-300 text-center "
             >
               Update Profile{" "}

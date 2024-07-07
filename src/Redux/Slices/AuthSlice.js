@@ -9,7 +9,10 @@ import axiosInstance from "../../Helpers/axiosInstance";
 const initialState = {
   isLoggedIn: localStorage.getItem("isLoggedIn") || false,
   role: localStorage.getItem("role") || "",
-  data: JSON.parse(localStorage.getItem("data")) || {},
+  data:
+    localStorage.getItem("data") !== undefined
+      ? JSON.parse(localStorage.getItem("data"))
+      : {},
 };
 export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
   try {
@@ -50,6 +53,31 @@ export const logout = createAsyncThunk("/auth/logout", async (data) => {
     toast.error(error?.response?.data?.message);
   }
 });
+export const updateUserProfile = createAsyncThunk(
+  "/user/updata/profile",
+  async (data) => {
+    try {
+      const res = axiosInstance.post("/user/update", data);
+      toast.promise(res, {
+        success: (data) => {
+          return data?.data?.message;
+        },
+      });
+      return (await res).data;
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+    }
+  }
+);
+export const getUserProfile = createAsyncThunk("/user/profile", async () => {
+  try {
+    const res = axiosInstance.get("/user/me");
+    console.log(res);
+    return (await res).data;
+  } catch (error) {
+    toast.error(error?.message);
+  }
+});
 const AuthSlice = createSlice({
   name: "auth",
   initialState,
@@ -80,6 +108,15 @@ const AuthSlice = createSlice({
         state.isLoggedIn = false;
         state.role = "";
         state.data = {};
+      })
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        if (!JSON.stringify(action?.payload?.user)) return;
+        localStorage.setItem("isLoggedIn", true);
+        localStorage.setItem("role", action?.payload?.user?.role);
+        localStorage.setItem("data", JSON.stringify(action?.payload?.user));
+        state.isLoggedIn = true;
+        state.role = action?.payload?.user.role;
+        state.data = action?.payload?.user;
       });
   },
 });

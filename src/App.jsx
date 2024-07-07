@@ -17,6 +17,7 @@ import Denied from "./pages/Denied";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import SignUp from "./pages/SignUp";
+import EditProfile from "./pages/user/EditProfile";
 import Profile from "./pages/user/Profile";
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         </Route>
         <Route element={<RequireAuth allowedRoles={["admin", "user"]} />}>
           <Route path="/user/profile" element={<Profile />}></Route>
+          <Route path="/user/editprofile" element={<EditProfile />}></Route>
         </Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>
