@@ -23,7 +23,7 @@ function HomePage() {
             faculties at a very affordable cost{" "}
           </p>
           <div className="space-x-6">
-            <Link to={"/courses"}>
+            <Link to={"/course"}>
               <button className="bg-yellow-500 px-5 py-3 font-semibold rounded-md text-lg cursor-pointer hover:bg-yellow-600 transition-all ease-in-out duration-300">
                 Explore courses
               </button>

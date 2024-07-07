@@ -17,6 +17,7 @@ import Denied from "./pages/Denied";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import SignUp from "./pages/SignUp";
+import Profile from "./pages/user/Profile";
 
 function App() {
   return (
@@ -36,6 +37,9 @@ function App() {
         ></Route>
         <Route element={<RequireAuth allowedRoles={["admin"]} />}>
           <Route path="/course/create" element={<CreateCourse />}></Route>
+        </Route>
+        <Route element={<RequireAuth allowedRoles={["admin", "user"]} />}>
+          <Route path="/user/profile" element={<Profile />}></Route>
         </Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>

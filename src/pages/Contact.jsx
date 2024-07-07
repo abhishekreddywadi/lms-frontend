@@ -38,7 +38,7 @@ function Contact() {
 
   return (
     <HomeLayout>
-      <div className="flex items-center justify-center h-[100vh]">
+      <div className="flex items-center justify-center h-[90vh]">
         <form
           noValidate
           onSubmit={onFormSubmit}

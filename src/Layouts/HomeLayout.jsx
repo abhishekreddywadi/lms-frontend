@@ -1,16 +1,13 @@
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable react/jsx-no-duplicate-props */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-import React from "react";
+// import React from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { RxCross1 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import Footer from "../components/Footer";
-import AuthSlice, { logout } from "../Redux/Slices/AuthSlice";
+import { logout } from "../Redux/Slices/AuthSlice";
 
+// eslint-disable-next-line react/prop-types
 function HomeLayout({ children }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,7 +28,7 @@ function HomeLayout({ children }) {
   };
   const handleLogout = async (event) => {
     event.preventDefault();
-    const res = await dispatch(logout());
+    await dispatch(logout());
     navigate("/login");
   };
 
@@ -65,7 +62,7 @@ function HomeLayout({ children }) {
               </li>
             )}
             <li>
-              <Link to={"/courses"}>All Courses</Link>
+              <Link to={"/course"}>All Courses</Link>
             </li>
             {isLoggedIn && role === "admin" && (
               <li>
