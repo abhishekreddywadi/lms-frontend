@@ -5,6 +5,21 @@ import axiosInstance from "../../Helpers/axiosInstance";
 const initialState = {
   courseData: [],
 };
+// calling axiosInstance on createCourse to create a course that is created by the admin
+export const createCourse = createAsyncThunk("/course/create", async (data) => {
+  try {
+    const response = axiosInstance.post("/course/create", data);
+    toast.promise(response, {
+      loading: "Creating the course",
+      success: "Course was successfully created",
+      // error: "failed to create the course",
+    });
+    return (await response).data;
+  } catch (error) {
+    toast.error(error?.response?.data?.message);
+  }
+});
+
 export const getAllCourses = createAsyncThunk("/course/get", async () => {
   try {
     const response = axiosInstance.get("/course");

@@ -22,8 +22,16 @@ function Login() {
   const onLogin = async (event) => {
     event.preventDefault();
     //  validate form
-    if (loginData.email.trim() === "") {
+    if (loginData?.email === "") {
       toast.error("Please enter fill all the details", {
+        duration: 1000,
+        position: "top-center",
+        // repeat: false,
+      });
+      return;
+    }
+    if (loginData?.password === "") {
+      toast.error("Please enter password", {
         duration: 1000,
         position: "top-center",
         // repeat: false,
@@ -32,10 +40,18 @@ function Login() {
     }
 
     const response = await dispatch(login(loginData));
-    console.log(response);
-    if (response?.payload?.status) {
+
+    if (response?.payload?.status === true) {
       navigate("/");
+      toast.success("Logged in successfully", {
+        duration: 1000,
+        position: "top-center",
+      });
+      return;
     }
+
+    console.log(response);
+
     setloginData({
       password: "",
     });
