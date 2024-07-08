@@ -7,10 +7,12 @@ const initialState = {
 };
 export const getAllUsers = createAsyncThunk("user/admin", async () => {
   try {
-    const response = await axiosInstance.get("/user/admin");
+    const response = axiosInstance.get("/user/getAllUsers");
     toast.promise(response, {
       loading: "loading the users",
-      success: "Users were successfully retrieved",
+      success: (data) => {
+        return data?.data?.message; // assuming users is an array of users in the response data
+      },
       error: "failed to retrieve the users",
     });
     return (await response).data;
@@ -20,12 +22,12 @@ export const getAllUsers = createAsyncThunk("user/admin", async () => {
   }
 });
 const statSlice = createSlice({
-  name: "stat",
+  name: "stats",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAllUsers.fulfilled, (state, action) => {
-      state.allUserCount = action.payload.length;
+      state.allUserCount = action.payload?.users;
     });
   },
 });

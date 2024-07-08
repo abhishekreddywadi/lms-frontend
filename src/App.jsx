@@ -20,6 +20,7 @@ import SignUp from "./pages/SignUp";
 import EditProfile from "./pages/user/EditProfile";
 import Profile from "./pages/user/Profile";
 import DisplayLectures from "./pages/Dashboard/DisplayLectures";
+import Admindashboard from "./pages/Dashboard/Admindashboard";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         ></Route>
         <Route element={<RequireAuth allowedRoles={["admin"]} />}>
           <Route path="/course/create" element={<CreateCourse />}></Route>
+          <Route path="/course/admin" element={<Admindashboard />}></Route>
         </Route>
         <Route element={<RequireAuth allowedRoles={["admin", "user"]} />}>
           <Route path="/user/profile" element={<Profile />}></Route>
