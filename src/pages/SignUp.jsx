@@ -13,12 +13,14 @@ function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [preview, setpreview] = useState("");
+  const [preview, setpreview] = useState(null);
+  const [imagepreview, setImagepreview] = useState("");
+
   const [signupData, setsignupData] = useState({
     fullName: "",
     email: "",
     password: "",
-    image: "",
+    thumbnailImage: "",
   });
   const handleInputChange = (e) => {
     setsignupData({ ...signupData, [e.target.name]: e.target.value });
@@ -27,12 +29,13 @@ function SignUp() {
     //  getting the image
     const uploadedImage = event.target.files[0];
     if (uploadedImage) {
-      setsignupData({ ...signupData, image: uploadedImage });
+      setpreview(uploadedImage);
+      setsignupData({ ...signupData, thumbnailImage: preview });
       const reader = new FileReader();
       reader.readAsDataURL(uploadedImage);
       reader.addEventListener("load", () => {
+        setImagepreview(reader.result);
         // console.log(reader.result);
-        setpreview(reader.result);
       });
     }
   };
@@ -82,15 +85,17 @@ function SignUp() {
       fullName: signupData.fullName,
       email: signupData.email,
       password: signupData.password,
+      // thumbnailthumbnailImage: preview,
     };
-    // const formData = new FormData();
-    // formData.append("fullName", signupData.fullName);
-    // formData.append("email", signupData.email);
-    // formData.append("password", signupData.password);
+    const formData = new FormData();
+    formData.append("fullName", signupData.fullName);
+    formData.append("email", signupData.email);
+    formData.append("password", signupData.password);
+    formData.append("thumbnailImage", preview);
     // JSON.parse(formData.toString);
     //  create account
     // dispatch createAccount action
-    const response = await dispatch(createAccount(data));
+    const response = await dispatch(createAccount(formData));
     console.log(response);
     if (response?.payload?.status) {
       navigate("/");
@@ -110,16 +115,17 @@ function SignUp() {
     <HomeLayout>
       <div className="flex items-center justify-center h-[90vh]">
         <form
+          encType="multipart/form-data"
           noValidate
           onSubmit={createNewAccount}
           className="flex flex-col justify-center gap-3 rounded-lg p-4 bg-slate-800 text-white w-96 shadow-2xl"
         >
           <h1 className="text-center text-2xl font-bold ">Registration Page</h1>
           <label htmlFor="image_uploads" className="cursor-pointer">
-            {preview ? (
+            {imagepreview ? (
               <img
                 className="w-24 h-24 rounded-full m-auto bg-contain "
-                src={preview}
+                src={imagepreview}
                 alt=""
               />
             ) : (

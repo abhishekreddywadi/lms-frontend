@@ -11,6 +11,8 @@ import { createCourse } from "../../Redux/Slices/CourseSlice";
 
 function CreateCourse() {
   const [image, setImage] = useState("");
+  const [imagepreview, setImagepreview] = useState("");
+
   const dispatch = useDispatch();
   //   const navigate = useNavigate();
   const [userInput, serUserInput] = useState({
@@ -18,10 +20,27 @@ function CreateCourse() {
     description: "",
     category: "",
     createdBy: "",
+    thumbnailImage: "", // for storing the thumbnail image
     // previewImage: "",
   });
   const handlUserInput = (event) => {
     serUserInput({ ...userInput, [event.target.name]: event.target.value });
+  };
+  const getImage = (event) => {
+    //  getting the image
+    const uploadedImage = event.target.files[0];
+    console.log(uploadedImage);
+    if (uploadedImage) {
+      const reader = new FileReader();
+      reader.readAsDataURL(uploadedImage);
+      reader.addEventListener("load", () => {
+        setImage(uploadedImage);
+        serUserInput({ ...userInput, thumbnailImage: image });
+        setImagepreview(reader.result);
+
+        // console.log(reader.result);
+      });
+    }
   };
   const onFormSubmit = async (event) => {
     event.preventDefault();
@@ -29,12 +48,19 @@ function CreateCourse() {
       !userInput.category ||
       !userInput.title ||
       !userInput.description ||
-      !userInput.createdBy
+      !userInput.createdBy ||
+      !userInput.thumbnailImage
     ) {
-      toast.error("Please fill all required fields");
+      return toast.error("Please fill all required fields");
     }
+    const formData = new FormData();
+    formData.append("title", userInput.title);
+    formData.append("description", userInput.description);
+    formData.append("category", userInput.category);
+    formData.append("createdBy", userInput.createdBy);
+    formData.append("thumbnailImage", image);
     // dispatching  the create course
-    const response = await dispatch(createCourse(userInput));
+    const response = await dispatch(createCourse(formData));
     // if the course is created successfully clear the form and navigate to course page  else show error message
     if (response.payload?.success) {
       serUserInput({
@@ -53,6 +79,7 @@ function CreateCourse() {
         <div className="flex items-center justify-center h-[90vh]">
           <form
             action=""
+            encType="multipart/form-data"
             onSubmit={onFormSubmit}
             className="flex flex-col justify-center gap-5 rounded-lg p-4 text-white w-[700px] my-10 shadow-lg relative"
           >
@@ -66,9 +93,9 @@ function CreateCourse() {
               <div className="gap-y-6 ">
                 <div>
                   <label htmlFor="image_uploads" className="cursor-pointer">
-                    {image ? (
+                    {imagepreview ? (
                       <img
-                        src={image}
+                        src={imagepreview}
                         alt="courseImage"
                         className="w-full h-44 m-auto border"
                       />
@@ -86,14 +113,7 @@ function CreateCourse() {
                     id="image_uploads"
                     accept=".jpg,.png, .jpeg, .gif"
                     name="image_uploads"
-                    onChange={(event) => {
-                      const file = event.target.files[0];
-                      const reader = new FileReader();
-                      reader.readAsDataURL(file);
-                      reader.addEventListener("load", () => {
-                        setImage(reader.result);
-                      });
-                    }}
+                    onChange={getImage}
                   />
                 </div>
                 <div className="flex flex-col gap-1 mt-2  ">
