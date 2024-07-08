@@ -1,19 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
+import axiosInstance from "../../Helpers/axiosInstance";
+// const lectures = [];
 const initialState = {
-  lecture: [],
+  lectures: [],
 };
 export const getCourseLecture = createAsyncThunk(
-  "/course/lecture",
+  "/course/getlectures",
 
   async (courseId) => {
     try {
-      const response = axiosInstance.get(`/course?id=${courseId}`);
+      const response = axiosInstance.get(`/course/${courseId}`);
       toast.promise(response, {
         loading: "Loading lectures",
         error: "Failed to load lectures",
       });
-      return (await response).data;
+      return await response;
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
@@ -24,7 +25,7 @@ export const addCourseLecture = createAsyncThunk(
 
   async (data) => {
     try {
-      const response = axiosInstance.post(`/course?id=${data.id}`, data);
+      const response = axiosInstance.post(`/course/${data.id}`, data);
       toast.promise(response, {
         loading: "adding  lectures",
         error: "Failed to add lectures",
@@ -54,16 +55,19 @@ export const deleteCourseLecture = createAsyncThunk(
 );
 const lectureSlice = createSlice({
   name: "lecture",
-  reducers: initialState,
+  initialState,
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase("getCourseLecture", (state, action) => {
-        console.log(action);
-        state.lecture = action.payload?.lectures;
+      .addCase(getCourseLecture.fulfilled, (state, action) => {
+        console.log(action + "hello");
+
+        state.lectures = action.payload?.lectures;
       })
-      .addCase("addCourseLecture", (state, action) => {
+      .addCase(addCourseLecture.fulfilled, (state, action) => {
         console.log(action);
-        state.lecture.push(action.payload?.course?.lectures);
+
+        state.lectures = action.payload?.course?.lectures;
       });
   },
 });

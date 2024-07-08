@@ -19,6 +19,7 @@ import NotFound from "./pages/NotFound";
 import SignUp from "./pages/SignUp";
 import EditProfile from "./pages/user/EditProfile";
 import Profile from "./pages/user/Profile";
+import DisplayLectures from "./pages/Dashboard/DisplayLectures";
 
 function App() {
   return (
@@ -42,6 +43,10 @@ function App() {
         <Route element={<RequireAuth allowedRoles={["admin", "user"]} />}>
           <Route path="/user/profile" element={<Profile />}></Route>
           <Route path="/user/editprofile" element={<EditProfile />}></Route>
+          <Route
+            path="/course/description/displaylecture"
+            element={<DisplayLectures />}
+          ></Route>
         </Route>
         <Route path="/signup" element={<SignUp />}></Route>
         <Route path="/login" element={<Login />}></Route>
